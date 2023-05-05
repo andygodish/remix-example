@@ -1,6 +1,22 @@
 import React from 'react'
+import { AiFillFacebook, AiFillTwitterSquare, AiFillLinkedin, AiFillInstagram, AiFillGithub } from 'react-icons/ai';
+import { IconContext, IconType } from 'react-icons';
+import { Link } from 'react-router-dom';
 
 export interface FooterProps { }
+
+export interface SocialLinks {
+    icon: IconType
+    url: string
+}
+
+export const socialLinks: SocialLinks[] = [
+    { icon: AiFillFacebook, url: ENV.FACEBOOK_URL },
+    { icon: AiFillTwitterSquare, url: ENV.TWITTER_URL },
+    { icon: AiFillLinkedin, url: ENV.LINKEDIN_URL },
+    { icon: AiFillInstagram, url: ENV.INSTAGRAM_URL },
+    { icon: AiFillGithub, url: ENV.GITHUB_URL }
+];
 
 const Footer: React.FC<FooterProps> = (_props): React.ReactElement => {
     return (
@@ -19,10 +35,20 @@ const Footer: React.FC<FooterProps> = (_props): React.ReactElement => {
                         <p className='text-xs mb-2'>Colorado Springs, CO</p>{/* Add your services content here */}
                     </div>
                     <div className="w-full md:w-1/3">
-                        <h3 className="text-lg font-semibold mb-4">About Us</h3>
-                        <p className='text-xs mb-2'>Monday-Saturday, 9am-5pm</p>
-                        <p className='text-xs mb-2'>Colorado Springs, CO</p>
-                        <p className='text-xs'>719-394-7906</p>
+                        <h3 className="text-lg font-semibold mb-4">Social Media</h3>
+                        <div className='flex space-x-3'>
+                            <IconContext.Provider value={{ size: "2em" }}>
+                                {
+                                    Object.values(socialLinks).map((socialLink, index) => {
+                                        return (
+                                            <Link to={socialLink.url} className='cursor-pointer'>
+                                                <socialLink.icon />
+                                            </Link>
+                                        )
+                                    })
+                                }
+                            </IconContext.Provider>
+                        </div>
                     </div>
                 </div>
             </footer>
